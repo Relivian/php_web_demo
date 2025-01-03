@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php_webserver
+    networks:
+      my_network:
+        ipv4_address: 192.168.100.2
+    volumes:
+      - ./web:/var/www/html
+    environment:
+      - PUID=${UID}
+      - PGID=${GID}
+  
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    networks:
+      my_network:
+        ipv4_address: 192.168.100.3
+    volumes:
+      - ./dbdata:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: daniel
+      MYSQL_DATABASE: web
+      MYSQL_USER: daniel
+      MYSQL_PASSWORD: daniel
+
+networks:
+  my_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24
+
