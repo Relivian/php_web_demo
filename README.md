@@ -18,8 +18,10 @@ docker-compse up
 
 To uninstall the project run
 '''
-docker-compose down 
-# or
+docker-compose down
+''' 
+or
+'''
 docker-compose down --volumes
 '''
 
